@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://fhqbrb8hw4wv"]
+
+[ext_resource type="Script" path="res://Asteroid/asteroid.gd" id="1_0s3ut"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hx0q1"]
+radius = 48.0104
+
+[node name="Asteroid" type="Area2D"]
+script = ExtResource("1_0s3ut")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hx0q1")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
