@@ -27,7 +27,7 @@ func input_movement() -> void:
 	
 	if direction:
 		velocity += direction * ACCELERATION
-		velocity.limit_length(MAX_SPEED)
+		velocity = velocity.limit_length(MAX_SPEED)
 	else:
 		velocity.move_toward(Vector2.ZERO, 3)
 
