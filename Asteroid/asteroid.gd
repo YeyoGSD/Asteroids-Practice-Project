@@ -6,3 +6,6 @@ func _physics_process(delta:float) -> void:
 
 func _on_area_entered(_area:Area2D) -> void:
 	queue_free() # Cambiar por fragmentación
+
+func _on_visible_on_screen_notifier_screen_exited():
+	queue_free()
