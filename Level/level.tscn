@@ -22,7 +22,7 @@ curve = SubResource("Curve2D_uyogg")
 position = Vector2(-100, -100)
 
 [node name="AsteroidSpawnTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 2.0
 autostart = true
 
 [connection signal="shot" from="Player" to="." method="_on_player_shot"]
