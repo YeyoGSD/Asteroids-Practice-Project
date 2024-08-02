@@ -1,5 +1,9 @@
 extends Node
 
+const MENU_SCENE:PackedScene = preload("res://PausedMenu/paused_menu.tscn")
+
 func _unhandled_key_input(event:InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit() # Cambiar por un menú de pausa
+	if event.is_action_pressed("pause"):
+		get_tree().paused = true
+		var paused_menu:Control = MENU_SCENE.instantiate()
+		add_child(paused_menu)
