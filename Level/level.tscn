@@ -25,5 +25,6 @@ position = Vector2(-100, -100)
 wait_time = 2.0
 autostart = true
 
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="shot" from="Player" to="." method="_on_player_shot"]
 [connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_asteroid_spawn_timer_timeout"]

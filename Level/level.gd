@@ -41,3 +41,7 @@ func add_explosion(spawn_position:Vector2) -> void:
 	new_explosion.global_position = spawn_position
 	new_explosion.emitting = true
 	add_child(new_explosion)
+
+func _on_player_hit() -> void:
+	if Global.lives <= 0:
+		print("Game Over")
