@@ -7,3 +7,5 @@
 script = ExtResource("1_xgc62")
 
 [node name="Level" parent="." instance=ExtResource("2_1r1kq")]
+
+[connection signal="game_over" from="Level" to="." method="_on_level_game_over"]

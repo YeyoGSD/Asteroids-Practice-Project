@@ -1,5 +1,7 @@
 extends Node2D
 
+signal game_over
+
 @onready var player:Player = $Player
 @onready var asteroid_spawn_timer:Timer = $AsteroidSpawnTimer
 @onready var spawn_point:PathFollow2D = $AsteroidSpawnPath/SpawnPoint
@@ -24,6 +26,7 @@ func _on_asteroid_spawn_timer_timeout() -> void:
 
 # No creo que sea la mejor manera de hacerlo pero funciona
 func _on_asteroid_destroyed(destroyed_asteroid:Asteroid) -> void:
+	Global.score += 10 + (destroyed_asteroid.size * 5)
 	add_explosion(destroyed_asteroid.global_position)
 	if destroyed_asteroid.size == Asteroid.SIZE.SMALL:
 		return
@@ -44,4 +47,7 @@ func add_explosion(spawn_position:Vector2) -> void:
 
 func _on_player_hit() -> void:
 	if Global.lives <= 0:
-		print("Game Over")
+		add_explosion(player.global_position)
+		player.visible = false
+		await get_tree().create_timer(0.6).timeout
+		game_over.emit()
