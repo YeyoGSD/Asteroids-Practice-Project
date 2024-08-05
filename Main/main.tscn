@@ -8,4 +8,26 @@ script = ExtResource("1_xgc62")
 
 [node name="Level" parent="." instance=ExtResource("2_1r1kq")]
 
+[node name="ScoreCanvas" type="CanvasLayer" parent="."]
+
+[node name="GridContainer" type="GridContainer" parent="ScoreCanvas"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Score" type="Label" parent="ScoreCanvas/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Lives" type="Label" parent="ScoreCanvas/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="game_over" from="Level" to="." method="_on_level_game_over"]
+[connection signal="lives_changed" from="Level" to="." method="_on_level_lives_changed"]
+[connection signal="score_changed" from="Level" to="." method="_on_level_score_changed"]
