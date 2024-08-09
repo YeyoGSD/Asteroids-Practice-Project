@@ -1,23 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://fhqbrb8hw4wv"]
+[gd_scene load_steps=7 format=3 uid="uid://fhqbrb8hw4wv"]
 
 [ext_resource type="Script" path="res://Asteroid/asteroid.gd" id="1_0s3ut"]
+[ext_resource type="Texture2D" uid="uid://b2mud7tbyx501" path="res://Asteroid/asteroid1.png" id="2_u71dm"]
+[ext_resource type="Texture2D" uid="uid://busrmc84wn6ig" path="res://Asteroid/asteroid2.png" id="3_nc4vq"]
+[ext_resource type="Texture2D" uid="uid://dfoxsj8jae4iw" path="res://Asteroid/asteroid3.png" id="4_omnje"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1ah44"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_fnjvd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_u71dm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_nc4vq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_omnje")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hx0q1"]
-radius = 50.0
+radius = 45.0111
 
 [node name="Asteroid" type="Area2D"]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_0s3ut")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(1.43051e-06, -4.41074e-06)
-scale = Vector2(100, 100)
-texture = SubResource("PlaceholderTexture2D_1ah44")
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, -1)
+sprite_frames = SubResource("SpriteFrames_fnjvd")
+frame = 1
 
-[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Sprite"]
+[node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="AnimatedSprite"]
 position = Vector2(-0.5, -0.49)
 scale = Vector2(0.02, 0.0198)
 rect = Rect2(0, 0, 50, 50)
@@ -26,4 +44,4 @@ rect = Rect2(0, 0, 50, 50)
 shape = SubResource("CircleShape2D_hx0q1")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="screen_exited" from="Sprite/VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_exited"]
+[connection signal="screen_exited" from="AnimatedSprite/VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_exited"]

@@ -1,39 +1,52 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcl3djprybc88"]
+[gd_scene load_steps=7 format=3 uid="uid://bcl3djprybc88"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_r2khi"]
+[ext_resource type="Texture2D" uid="uid://b0iigkyknuto2" path="res://Player/ship.png" id="2_mxouk"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_107dd"]
-radius = 20.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4imo1"]
+size = Vector2(62, 52)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8hkid"]
-radius = 20.0998
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgavr"]
+size = Vector2(62, 52)
+
+[sub_resource type="Animation" id="Animation_8uc6d"]
+resource_name = "hit"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitArea/AreaCollisionShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_80bfb"]
+_data = {
+"hit": SubResource("Animation_8uc6d")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_r2khi")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Sprite" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_mxouk")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_107dd")
+shape = SubResource("RectangleShape2D_4imo1")
 
 [node name="HitArea" type="Area2D" parent="."]
 collision_mask = 4
 
 [node name="AreaCollisionShape" type="CollisionShape2D" parent="HitArea"]
-shape = SubResource("CircleShape2D_8hkid")
+shape = SubResource("RectangleShape2D_fgavr")
 
 [node name="Timers" type="Node" parent="."]
 
@@ -41,10 +54,13 @@ shape = SubResource("CircleShape2D_8hkid")
 wait_time = 0.3
 one_shot = true
 
-[node name="InvincibleTimer" type="Timer" parent="Timers"]
-wait_time = 1.5
-one_shot = true
+[node name="BulletSpawnMarker" type="Marker2D" parent="."]
+position = Vector2(36, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_80bfb")
+}
 
 [connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
 [connection signal="timeout" from="Timers/ShootingTimer" to="." method="_on_shooting_timer_timeout"]
-[connection signal="timeout" from="Timers/InvincibleTimer" to="." method="_on_invincible_timer_timeout"]

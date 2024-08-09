@@ -5,6 +5,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.977528, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="Explosion" type="CPUParticles2D"]
+z_index = 1
 emitting = false
 amount = 60
 lifetime = 0.6
@@ -17,3 +18,4 @@ initial_velocity_max = 100.0
 scale_amount_min = 5.0
 scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_i2s76")
+color = Color(0.6, 0.439216, 0.333333, 1)
