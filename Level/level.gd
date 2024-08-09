@@ -14,7 +14,7 @@ const EXPLOSION_SCENE:PackedScene = preload("res://ExplosionParticles/explosion.
 
 func _on_player_shot() -> void:
 	var new_bullet:Bullet = BULLET_SCENE.instantiate()
-	new_bullet.global_position = player.global_position
+	new_bullet.global_position = player.bullet_spawn_marker.global_position
 	new_bullet.global_rotation = player.rotation
 	add_child(new_bullet)
 
@@ -30,7 +30,7 @@ func _on_asteroid_spawn_timer_timeout() -> void:
 func _on_asteroid_destroyed(destroyed_asteroid:Asteroid) -> void:
 	Global.score += 10 + (destroyed_asteroid.size * 5)
 	score_changed.emit()
-	add_explosion(destroyed_asteroid.global_position)
+	add_explosion(destroyed_asteroid.global_position, Global.ASTEROID_EXPLOSION_COLOR)
 	if destroyed_asteroid.size == Asteroid.SIZE.SMALL:
 		return
 	
@@ -42,16 +42,17 @@ func _on_asteroid_destroyed(destroyed_asteroid:Asteroid) -> void:
 		new_asteroid.size += destroyed_asteroid.size + 1
 		call_deferred("add_child", new_asteroid)
 
-func add_explosion(spawn_position:Vector2) -> void:
+func add_explosion(spawn_position:Vector2, color:Color) -> void:
 	var new_explosion:CPUParticles2D = EXPLOSION_SCENE.instantiate()
 	new_explosion.global_position = spawn_position
+	new_explosion.color = color
 	new_explosion.emitting = true
 	add_child(new_explosion)
 
 func _on_player_hit() -> void:
 	lives_changed.emit()
 	if Global.lives <= 0:
-		add_explosion(player.global_position)
+		add_explosion(player.global_position, Global.PLAYER_EXPLOSION_COLOR)
 		player.visible = false
 		await get_tree().create_timer(0.6).timeout
 		game_over.emit()
