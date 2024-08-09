@@ -5,7 +5,7 @@ signal destroyed
 
 enum SIZE {BIG, MEDIUM, SMALL}
 
-@onready var sprite:Sprite2D = $Sprite
+@onready var animated_sprite:AnimatedSprite2D = $AnimatedSprite
 @onready var collision_shape:CollisionShape2D = $CollisionShape
 
 const ORIGINAL_SPEED:int = 100
@@ -17,6 +17,7 @@ var size:SIZE = SIZE.BIG
 func _ready() -> void:
 	speed = ORIGINAL_SPEED
 	direction = Vector2(1, 0).rotated(rotation)
+	animated_sprite.frame = randi() % 3
 	if size != SIZE.BIG:
 		set_properties()
 
@@ -35,8 +36,8 @@ func set_properties() -> void:
 	speed += 200
 	match size:
 		SIZE.MEDIUM:
-			sprite.scale /= 2
+			animated_sprite.scale /= 2
 			collision_shape.scale /= 2
 		SIZE.SMALL:
-			sprite.scale /= 4
+			animated_sprite.scale /= 4
 			collision_shape.scale /= 4
