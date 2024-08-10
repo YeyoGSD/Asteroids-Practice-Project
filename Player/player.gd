@@ -4,11 +4,12 @@ extends CharacterBody2D
 signal shot
 signal hit
 
-@onready var color_rect:ColorRect = $ColorRect #Temp
-@onready var sprite_size:Vector2 = color_rect.get_size() * color_rect.get_scale() #Temp
+@onready var sprite:Sprite2D = $Sprite
+@onready var sprite_size:Vector2 = sprite.texture.get_size() * sprite.get_scale()
+@onready var bullet_spawn_marker:Marker2D = $BulletSpawnMarker
 @onready var area_collision_shape:CollisionShape2D = $HitArea/AreaCollisionShape
 @onready var shooting_timer:Timer = $Timers/ShootingTimer
-@onready var invincible_timer:Timer = $Timers/InvincibleTimer
+@onready var animation_player:AnimationPlayer = $AnimationPlayer
 
 const ACCELERATION:int = 10
 const MAX_SPEED:int = 300
@@ -48,10 +49,5 @@ func _on_shooting_timer_timeout() -> void:
 	can_shoot = true
 
 func _on_hit_area_area_entered(_area:Area2D) -> void:
-	area_collision_shape.set_deferred("disabled", true)
-	invincible_timer.start()
-	Global.lives -= 1
+	animation_player.play("hit")
 	hit.emit()
-
-func _on_invincible_timer_timeout() -> void:
-	area_collision_shape.set_deferred("disabled", false)

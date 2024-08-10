@@ -50,6 +50,7 @@ func add_explosion(spawn_position:Vector2, color:Color) -> void:
 	add_child(new_explosion)
 
 func _on_player_hit() -> void:
+	Global.lives -= 1
 	lives_changed.emit()
 	if Global.lives <= 0:
 		add_explosion(player.global_position, Global.PLAYER_EXPLOSION_COLOR)
