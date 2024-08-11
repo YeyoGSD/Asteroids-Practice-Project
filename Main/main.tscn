@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bk821k2q5e3r2"]
+[gd_scene load_steps=4 format=3 uid="uid://bk821k2q5e3r2"]
 
 [ext_resource type="Script" path="res://Main/Main.gd" id="1_xgc62"]
 [ext_resource type="PackedScene" uid="uid://4unqvd6msldj" path="res://Level/level.tscn" id="2_1r1kq"]
+[ext_resource type="Texture2D" uid="uid://b0iigkyknuto2" path="res://Player/ship.png" id="3_w8nhd"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_xgc62")
@@ -10,23 +11,39 @@ script = ExtResource("1_xgc62")
 
 [node name="ScoreCanvas" type="CanvasLayer" parent="."]
 
-[node name="GridContainer" type="GridContainer" parent="ScoreCanvas"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Score" type="Label" parent="ScoreCanvas/GridContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "000"
+[node name="Score" type="Label" parent="ScoreCanvas"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -130.0
+offset_right = -15.0
+offset_bottom = 55.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 40
+text = "00000"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Lives" type="Label" parent="ScoreCanvas/GridContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "3"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="LivesBackground" type="TextureRect" parent="ScoreCanvas"]
+modulate = Color(1, 1, 1, 0.247059)
+custom_minimum_size = Vector2(297, 0)
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 307.0
+offset_bottom = 85.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_w8nhd")
+stretch_mode = 1
+
+[node name="Lives" type="TextureRect" parent="ScoreCanvas"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 307.0
+offset_bottom = 85.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_w8nhd")
+expand_mode = 1
+stretch_mode = 1
 
 [connection signal="game_over" from="Level" to="." method="_on_level_game_over"]
 [connection signal="lives_changed" from="Level" to="." method="_on_level_lives_changed"]

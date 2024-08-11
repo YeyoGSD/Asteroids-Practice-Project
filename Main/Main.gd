@@ -4,8 +4,10 @@ const MENU_SCENE:PackedScene = preload("res://PausedMenu/paused_menu.tscn")
 const GAMEOVER_SCENE:PackedScene = preload("res://GameOver/game_over.tscn")
 
 @onready var score_canvas:CanvasLayer = $ScoreCanvas
-@onready var score:Label = $ScoreCanvas/GridContainer/Score
-@onready var lives:Label = $ScoreCanvas/GridContainer/Lives
+@onready var score:Label = $ScoreCanvas/Score
+@onready var lives_rect:TextureRect = $ScoreCanvas/Lives
+
+const heart_width:float = 99
 
 func _ready() -> void:
 	Global.lives = 3
@@ -21,7 +23,10 @@ func _on_level_game_over() -> void:
 	add_child(GAMEOVER_SCENE.instantiate())
 
 func _on_level_score_changed() -> void:
-	score.text = str(Global.score)
+	score.text = "%05d" % Global.score
 
 func _on_level_lives_changed() -> void:
-	lives.text = str(Global.lives)
+	update_lives_rect()
+
+func update_lives_rect() -> void:
+	lives_rect.size.x = heart_width * Global.lives
