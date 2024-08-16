@@ -10,6 +10,7 @@ signal hit
 @onready var area_collision_shape:CollisionShape2D = $HitArea/AreaCollisionShape
 @onready var shooting_timer:Timer = $Timers/ShootingTimer
 @onready var animation_player:AnimationPlayer = $AnimationPlayer
+@onready var laser_sound_player:AudioStreamPlayer = $LaserSoundPlayer
 
 const ACCELERATION:int = 10
 const MAX_SPEED:int = 300
@@ -43,6 +44,7 @@ func shoot() -> void:
 	if can_shoot:
 		can_shoot = false
 		shooting_timer.start()
+		laser_sound_player.play()
 		shot.emit()
 
 func _on_shooting_timer_timeout() -> void:

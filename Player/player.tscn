@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcl3djprybc88"]
+[gd_scene load_steps=8 format=3 uid="uid://bcl3djprybc88"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_r2khi"]
 [ext_resource type="Texture2D" uid="uid://b0iigkyknuto2" path="res://Player/ship.png" id="2_mxouk"]
+[ext_resource type="AudioStream" uid="uid://deadai2g1n5ko" path="res://Player/sfx_laser.ogg" id="3_w0o7n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4imo1"]
 size = Vector2(62, 52)
@@ -73,6 +74,9 @@ position = Vector2(36, 0)
 libraries = {
 "": SubResource("AnimationLibrary_80bfb")
 }
+
+[node name="LaserSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_w0o7n")
 
 [connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
 [connection signal="timeout" from="Timers/ShootingTimer" to="." method="_on_shooting_timer_timeout"]
